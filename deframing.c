@@ -59,19 +59,19 @@ int main(){
 		
 		
 		startFrame = frames * 440;
-		printf("\n~~%d",startFrame);
+		//printf("\n~~%d",startFrame);
 		if(endOfFrameLen < 440){
 			stopFrame = LClen-8;
-			printf("\n~-%d",stopFrame);
+			//printf("\n~-%d",stopFrame);
 		} else {
 			stopFrame = (440 * (frames+1)-8);
 			endOfFrameLen -= 440;
-			printf("\n~%d",stopFrame);
-			printf("--%d",frames);
-			printf("-%d",numOfFrames);
-			printf("-%d",endOfFrameLen);
+			//printf("\n~%d",stopFrame);
+			//printf("--%d",frames);
+			//printf("-%d",numOfFrames);
+			//printf("-%d",endOfFrameLen);
 		}
-		printf("\n~%d",stopFrame);
+		//printf("\n~%d",stopFrame);
 		
 		/* 
 		 *
@@ -88,10 +88,10 @@ int main(){
 		if (!strcmp(startByte,"00000001")){
 			indexCount = 8;
 			//startByte == "00000001"
-			printf("\nI found the start byte.");
+			//printf("\nI found the start byte.");
 			if (!strcmp(stopByte,"00000100")){		
 				//stopByte == "00000100"
-				printf("\nI found the stop byte.");
+				//printf("\nI found the stop byte.");
 				/* 
 				 *
 				 *	Initialization of acquisition of header value
@@ -101,7 +101,7 @@ int main(){
 				
 				char firstHeader[8]; //first number of payload size
 				int firstHeaderIndex = (startFrame+8);
-				printf("\n>%d",firstHeaderIndex);
+				//printf("\n>%d",firstHeaderIndex);
 				for(c=0; c<8; c++){
 					
 					//strncpy(firstHeader,inputFromLC,8);
@@ -121,7 +121,7 @@ int main(){
 				
 				char secondHeader[8]; //second number of payload size
 				int secondHeaderIndex = firstHeaderIndex; //Last iteration from previous for loop
-				printf("\n>>%d\n",secondHeaderIndex);
+				//printf("\n>>%d\n",secondHeaderIndex);
 				for(d=0;d<8;d++){
 					secondHeader[d] = inputFromLC[secondHeaderIndex];
 					//printf("%s~",secondHeader);
@@ -176,6 +176,8 @@ int main(){
 					payloadIndex++;
 				}
 				payloadArr[frames][m] = '\0';
+				//printf("\n--%d",payloadIndex);
+				printf("\n---pl %s",payloadArr[frames]);
 				//printf("\n%s",payloadArr);
 				//printf("\n-%d", indexCount);
 				
@@ -206,17 +208,21 @@ int main(){
 				}
 				*/
 				
-				int indexOfParityBits = m; //Last iteration of payloadIndex
+				int indexOfParityBits = payloadIndex; //Last iteration of payloadIndex
 				//printf("\n%d",indexOfParityBits);
 				//printf("\n%d", indexOfParityBits+payloadSize);
+				printf("\n--%d\n", indexOfParityBits);
 				char parityArr[frames][45];
 				int parBitCounter = 0;
 				for(n=indexOfParityBits; n<(indexOfParityBits+payloadSize); n++){
 					parityArr[frames][parBitCounter] = inputFromLC[n];
 					//indexCount++;
 					parBitCounter++;
+					printf("%d ",n);
 				}
 				parityArr[frames][parBitCounter] = '\0';
+				//printf("\n---%d",parBitCounter);
+				printf("\n---%s", parityArr[frames]);
 				//printf("\n%s",parityArr);
 				
 				 			
@@ -229,22 +235,29 @@ int main(){
 				 //printf("\n-%d", payload+payloadSize);
 				 int p = 0;
 				 int payloadCounter = 0;
+				 printf("\n~%d",payload+payloadSize+1);
+				 printf("\n");
 				 for(o = 1; o < payload+payloadSize+1; o++){
 				 	 if(o==1){
 				 	 	dframes[frames][o-1] = payloadArr[frames][payloadCounter];
 				 	 	payloadCounter++;
 				 	 	//printf("\n-%s",dframes[frames]);
+				 	 	printf("0");
 					  } else if(o%9==0){
 				 		dframes[frames][o-1] = parityArr[frames][p];
 				 		p++;
-				 		//printf("\n---%s",dframes[frames]);
+				 		//printf("%c",parityArr[frames][p]);
+				 		printf("2~");
 					 } else if (o%9!=0){
 						 dframes[frames][o-1] = payloadArr[frames][payloadCounter];
 						 payloadCounter++;
 						 //printf("\n--%s",dframes[frames]);
+						 printf("1");
 					 }
 				 }
 				 dframes[frames][o] = '\0';
+				 printf("\n%d",o);
+				 printf("\n--df %s", dframes[frames]);
 				 
 				/* 
 				 *
@@ -253,7 +266,7 @@ int main(){
 				 */
 				//printf("\n");
 				for(i=0; i<payload+payloadSize; i++){
-					printf("%c", dframes[frames][i]);	
+					//printf("%c", dframes[frames][i]);	
 				}	
 				//printf("~\n");
 			}
