@@ -47,6 +47,7 @@ int main(){
 	}
 
 	char dframes[numOfFrames][frameTotSize];
+	char payloadArr[numOfFrames][360], parityArr[numOfFrames][45];
 	int indexCount = 0;
 	int counter = 0;
 	int frames,endOfFrameLen = LClen;
@@ -167,15 +168,16 @@ int main(){
 				printf("\n");
 				*/
 				
-				char payloadArr[frames][360];
+				//char payloadArr[numOfFrames][360];
 				int payload = payloadSize*8;
 				int payloadIndex = secondHeaderIndex; //Start of payload index
 				
-				printf("\n%d",payload);
-				printf("\n-%d",payloadIndex);
+				//printf("\n%d",payload);
+				//printf("\n-%d",payloadIndex);
 				for(m = 0; m < payload; m++){
 					payloadArr[frames][m] = inputFromLC[payloadIndex];
 					payloadIndex++;
+					//printf("--%d",m);
 				}
 				payloadArr[frames][m] = '\0';
 				//printf("\n--%d",payloadIndex);
@@ -214,7 +216,7 @@ int main(){
 				//printf("\n%d",indexOfParityBits);
 				//printf("\n%d", indexOfParityBits+payloadSize);
 				//printf("\n--%d\n", indexOfParityBits);
-				char parityArr[frames][45];
+				//char parityArr[frames][45];
 				int parBitCounter = 0;
 				for(n=indexOfParityBits; n<(indexOfParityBits+payloadSize); n++){
 					parityArr[frames][parBitCounter] = inputFromLC[n];
@@ -223,6 +225,7 @@ int main(){
 					//printf("%d ",n);
 				}
 				parityArr[frames][parBitCounter] = '\0';
+				//printf("\n---pl after %s",payloadArr[frames]);
 				//printf("\n---%d",parBitCounter);
 				//printf("\n---par %s", parityArr[frames]);
 				//printf("\n%s",parityArr);
@@ -239,8 +242,8 @@ int main(){
 				 int payloadCounter = 0;
 				 //printf("\n~%d",payload+payloadSize+1);
 				 //printf("\n");
-				 printf("\npl = %s", payloadArr[frames]);
-				 printf("\npar = %s", parityArr[frames]);
+				 //printf("\npl = %s", payloadArr[frames]);
+				 //printf("\npar = %s", parityArr[frames]);
 				 for(o = 1; o < payload+payloadSize+1; o++){
 				 	 if(o==1){
 				 	 	dframes[frames][o-1] = payloadArr[frames][payloadCounter];
@@ -270,7 +273,7 @@ int main(){
 				 */
 				//printf("\n");
 				//printf("%d\n",payload+payloadSize);
-				printf("\n");
+				//printf("\n");
 				for(i=0; i<payload+payloadSize; i++){
 					printf("%c", dframes[frames][i]);	
 				}	

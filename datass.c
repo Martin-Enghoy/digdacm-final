@@ -17,7 +17,7 @@ int main(){
 	input = storingLongStr(input, maxLength, currSize);
     
     fullLength = strlen(input);                     //counts string length
-    printf("\n~%d",fullLength);
+    //printf("\n~%d",fullLength);
 	if(fullLength%8==0){
 	
 	//DIY binary to decimal
@@ -32,13 +32,13 @@ int main(){
 		
 		//out[counter] = sum; //puts decimal value into array
 		tempArr[counter] = sum;
-		printf("\n~~%d",counter);
+		//printf("\n~~%d",counter);
 		//strcat(output, buffer);
-		printf("\n~%d",sum);
+		//printf("\n~%d",sum);
 		//printf("~%s",output);
 		//printf("\n---%c",out[counter]);
-		printf("\n---%c",tempArr[counter]);
-		printf("\n----%s",tempArr);
+		//printf("\n---%c",tempArr[counter]);
+		//printf("\n----%s",tempArr);
 		counter++;
 		sum = 0; //resets ascii value
 	}
@@ -52,6 +52,9 @@ int main(){
 		printf("%c",output[k]);	
 	}
 	*/
+	
+	printf("\n%s",tempArr);
+	
 	} else {
 		printf("Input is not divisible by 8.");
 	}
