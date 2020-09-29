@@ -44,7 +44,12 @@ int main() {
 
     // Takes care of the instance that a block of bits has less than 44 bytes as payload
     if (additionalGroup != 0) {
-        groups++;
+        if (additionalGroup < 18) {
+            printf("Error: Input less than the minimum payload and EDC size!");
+            return 0;
+        } else {
+            groups++;
+        }
     }
 
     char frames[groups][frameTotSize];
@@ -124,14 +129,22 @@ int main() {
         // Separate the column and row parities from the payload
         // Insert directly the payload to the frame
         for (int c = indexInputEDC; c < counter; c++) {
-            if (((c + 1) % 9 == 0) || c >= counter - 9) {
-                parityBits[indexOfParityBits] = inputFromEDC[c];
-                indexOfParityBits++;
+            char character = inputFromEDC[c];
+            if (character == '0' || character == '1') {
+                if (((c + 1) % 9 == 0) || c >= counter - 9) {
+                    parityBits[indexOfParityBits] = character;
+                    indexOfParityBits++;
+                } else {
+                    frames[k][indexOfFrame] = inputFromEDC[c];
+                    indexOfFrame++;
+                }
+                indexInputEDC++;
             } else {
-                frames[k][indexOfFrame] = inputFromEDC[c];
-                indexOfFrame++;
+                // Bit Error - only 0 and 1 are possible bit value
+                printf("Bit Error!");
+                return 0;
             }
-            indexInputEDC++;
+
         }
 
         // Separation of the parity byte from the column parities
