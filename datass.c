@@ -20,15 +20,17 @@ int main(){
 	stream[0] = '\0';
 	
 	i = 0;
-	if(strlen(input)%8==0){
+	
 	    while( block != NULL ) {
 	        strcat(stream, block);
 	        block = strtok(NULL, " ");
 	        i++;
 	    }
+	    //stream[i] = '\0';
 	    strcpy(input,stream);
 	    fullLength = strlen(input);                     //counts string length
 	    
+		if(strlen(input)%8==0){
 		//DIY binary to decimal
 		for ( i=0; i<fullLength; i+=8){
 			bin = 128;
@@ -44,6 +46,7 @@ int main(){
 			//strcat(output, buffer);
 			sum = 0; //resets ascii value
 		}
+		output[counter] = '\0';
 		
 		printf("%s", output); //outputs decimal to corresponding ascii
 		
