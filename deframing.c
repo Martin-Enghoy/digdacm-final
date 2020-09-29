@@ -174,12 +174,29 @@ int main(){
 				
 				//printf("\n%d",payload);
 				//printf("\n-%d",payloadIndex);
-				for(m = 0; m < payload; m++){
-					payloadArr[frames][m] = inputFromLC[payloadIndex];
-					payloadIndex++;
-					//printf("--%d",m);
+				int numOfRowBits = payloadSize;
+				
+				for(i=0;i<15;i++)
+				if(numOfRowBits%8==0){
+					numOfRowBits;
+					break;
+				} else{
+					numOfRowBits++;	
 				}
-				payloadArr[frames][m] = '\0';
+				//printf("\n--%d",numOfRowBits);
+				
+				if(!(payloadIndex+payload > stopFrame-numOfRowBits)){
+					for(m = 0; m < payload; m++){
+						payloadArr[frames][m] = inputFromLC[payloadIndex];
+						payloadIndex++;
+						//printf("--%d",m);
+					}
+					payloadArr[frames][m] = '\0';
+				} else {
+					printf("Payload+ParityBits are not enough on deframing. Please re-pipe the input.");
+					break;
+				}
+				
 				//printf("\n--%d",payloadIndex);
 				//printf("\n---pl %s",payloadArr[frames]);
 				//printf("\n%s",payloadArr);
@@ -218,13 +235,20 @@ int main(){
 				//printf("\n--%d\n", indexOfParityBits);
 				//char parityArr[frames][45];
 				int parBitCounter = 0;
-				for(n=indexOfParityBits; n<(indexOfParityBits+payloadSize); n++){
-					parityArr[frames][parBitCounter] = inputFromLC[n];
-					//indexCount++;
-					parBitCounter++;
-					//printf("%d ",n);
+				int parBitCheck = numOfRowBits;
+				
+				if(!(parBitCheck > stopFrame)){
+					for(n=indexOfParityBits; n<(indexOfParityBits+payloadSize); n++){
+						parityArr[frames][parBitCounter] = inputFromLC[n];
+						//indexCount++;
+						parBitCounter++;
+						//printf("%d ",n);
+					}
+					parityArr[frames][parBitCounter] = '\0';
+				} else {
+					printf("Not enough Parity Bits on deframing. Please repipe the input.");
+					break;
 				}
-				parityArr[frames][parBitCounter] = '\0';
 				//printf("\n---pl after %s",payloadArr[frames]);
 				//printf("\n---%d",parBitCounter);
 				//printf("\n---par %s", parityArr[frames]);
@@ -278,7 +302,11 @@ int main(){
 					printf("%c", dframes[frames][i]);	
 				}	
 				//printf("~\n");
+			} else {
+				printf("No Stop byte detected on deframing. Please re-pipe with the correct input.");
 			}
+		} else {
+			printf("No Start byte detected on deframing. Please re-pipe with the correct input.");
 		}
 	}
 	
