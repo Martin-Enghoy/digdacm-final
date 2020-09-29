@@ -20,37 +20,41 @@ int main(){
 	stream[0] = '\0';
 	
 	i = 0;
-    while( block != NULL ) {
-        strcat(stream, block);
-        block = strtok(NULL, " ");
-        i++;
-    }
-    strcpy(input,stream);
-    fullLength = strlen(input);                     //counts string length
-    
-	//DIY binary to decimal
-	for ( i=0; i<fullLength; i+=8){
-		bin = 128;
-		for (j = i; j < i+8; j++){
-			if(input[j]=='1'){
-				sum += bin;
+	if(strlen(input)%8==0){
+	    while( block != NULL ) {
+	        strcat(stream, block);
+	        block = strtok(NULL, " ");
+	        i++;
+	    }
+	    strcpy(input,stream);
+	    fullLength = strlen(input);                     //counts string length
+	    
+		//DIY binary to decimal
+		for ( i=0; i<fullLength; i+=8){
+			bin = 128;
+			for (j = i; j < i+8; j++){
+				if(input[j]=='1'){
+					sum += bin;
+				}
+				bin = bin/2;
 			}
-			bin = bin/2;
+			
+			output[counter] = sum; //puts decimal value into array
+			counter++;
+			//strcat(output, buffer);
+			sum = 0; //resets ascii value
 		}
 		
-		output[counter] = sum; //puts decimal value into array
-		counter++;
-		//strcat(output, buffer);
-		sum = 0; //resets ascii value
-	}
-	
-	printf("%s", output); //outputs decimal to corresponding ascii
-	
+		printf("%s", output); //outputs decimal to corresponding ascii
+		
 	/*
 	for(k=0; i<counter; k++){
 		printf("%c",output[k]);	
 	}
 	*/
+	} else {
+		printf("Input is not divisible by 8.");
+	}
 	
 	return 0;
 }
