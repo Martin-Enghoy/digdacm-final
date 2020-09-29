@@ -3,7 +3,7 @@
 //  parityCalculation
 //
 //  Created by Marxette Diane Cabato on 9/22/20.
-//  Copyright Â© 2020 Marxette Diane Cabato. All rights reserved.
+//  Copyright © 2020 Marxette Diane Cabato. All rights reserved.
 //
 
 #include<stdio.h>

@@ -9,27 +9,17 @@ char *readFile(char *fileName);
 // input : \Users\Marxette\Desktop\input.txt
 
 int main() {
-	FILE *fp1;
+	//FILE *fp1;
 	char inFile[MAX];
 	char out[MAX];
 	char buffer[33];
 	char * fullText = (char *) malloc(440);
 	int a,i,j;
 	
-   //get the input file name from the user
+   //get the input from the user
     scanf("%[^\n]", inFile);
 
-    // open the source file in read mode
-    fp1 = fopen(inFile, "r");
-
-    // error handling
-    if (!fp1) {
-        //printf("Unable to open the input file!!\n");
-        strcpy(fullText,inFile);
-    } else {
-    	// reads and gets data from input file
-    	fullText = readFile(inFile);
-	}
+    strcpy(fullText,inFile);
     
    for( i=0;i<strlen(fullText);i++) //loop based on number of characters in the file
    {   		

@@ -142,12 +142,15 @@ void TwoDParityModular(int start, int end, char *input, char *data,int *err){
 		//	printf("%c", parTable[row][col]);
 			strncat(data, &parTable[row][col], 1);
 			}
+			strcat(data, " ");
 	}
 	
 	
 	rowErr = rowCheck((char *)parTable, totGrp,bitGrp);
 	colErr = columCheck((char *)parTable, totGrp,bitGrp);
 	*err =  greater(rowErr, colErr);
+	
+
 
 }
 

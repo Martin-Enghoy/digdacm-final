@@ -8,18 +8,26 @@ char writeToFile(char text);
 char *storingLongStr(char *str, unsigned int maxLength, unsigned int currSize);
 
 int main(){
+	char * stream = malloc(MAX);
 	char * input = malloc(MAX), * output = malloc(MAX);
 	char out[MAX];
-	char tempArr[245];
 	char buffer[33];
 	int i,j,k,sum,bin,counter=0,fullLength,maxLength=128,currSize=0;
-	
+
 	input = storingLongStr(input, maxLength, currSize);
-    
-    fullLength = strlen(input);                     //counts string length
-    //printf("\n~%d",fullLength);
-	if(fullLength%8==0){
+	char * block = strtok(input, " ");
+    // 01110100 01100101 01110011 01110100
+	stream[0] = '\0';
 	
+	i = 0;
+    while( block != NULL ) {
+        strcat(stream, block);
+        block = strtok(NULL, " ");
+        i++;
+    }
+    strcpy(input,stream);
+    fullLength = strlen(input);                     //counts string length
+    
 	//DIY binary to decimal
 	for ( i=0; i<fullLength; i+=8){
 		bin = 128;
@@ -30,34 +38,19 @@ int main(){
 			bin = bin/2;
 		}
 		
-		//out[counter] = sum; //puts decimal value into array
-		tempArr[counter] = sum;
-		//printf("\n~~%d",counter);
-		//strcat(output, buffer);
-		//printf("\n~%d",sum);
-		//printf("~%s",output);
-		//printf("\n---%c",out[counter]);
-		//printf("\n---%c",tempArr[counter]);
-		//printf("\n----%s",tempArr);
+		output[counter] = sum; //puts decimal value into array
 		counter++;
+		//strcat(output, buffer);
 		sum = 0; //resets ascii value
 	}
-	output[counter] = '\0';
 	
-	
-	//printf("\n%s", output); //outputs decimal to corresponding ascii
+	printf("%s", output); //outputs decimal to corresponding ascii
 	
 	/*
 	for(k=0; i<counter; k++){
 		printf("%c",output[k]);	
 	}
 	*/
-	
-	printf("\n%s",tempArr);
-	
-	} else {
-		printf("Input is not divisible by 8.");
-	}
 	
 	return 0;
 }
@@ -83,4 +76,3 @@ char *storingLongStr(char *str, unsigned int maxLength, unsigned int currSize) {
     }
     return str;
 }
-
